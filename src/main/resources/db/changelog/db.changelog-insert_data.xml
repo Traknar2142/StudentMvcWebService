@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2" author="vvprokhorenko">
+        <insert tableName="t_student">
+            <column name="first_name" value="AlikoF"/>
+            <column name="middle_name" value="AlikoM"/>
+            <column name="last_name" value="AlikoL"/>
+            <column name="birthday_date" value="1990-12-12"/>
+            <column name="group_name" value="group-1"/>
+        </insert>
+        <insert tableName="t_student">
+            <column name="first_name" value="PalikoF"/>
+            <column name="middle_name" value="PalikoM"/>
+            <column name="last_name" value="PalikoL"/>
+            <column name="birthday_date" value="1991-12-12"/>
+            <column name="group_name" value="group-2"/>
+        </insert>
+        <insert tableName="t_student">
+            <column name="first_name" value="MalikoF"/>
+            <column name="middle_name" value="MalikoM"/>
+            <column name="last_name" value="MalikoL"/>
+            <column name="birthday_date" value="1992-12-12"/>
+            <column name="group_name" value="group-3"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

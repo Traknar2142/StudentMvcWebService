@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<h2>HTML Table</h2>
+<table id="studentsList">
+
+</table>
+
+<form action="#">
+    <input id="id" placeholder="id">
+    <input id="first_name" placeholder="Firstname">
+    <input id="middle_name" placeholder="Middlename">
+    <input id="last_name" placeholder="LastName">
+    <input id="birthday_date" placeholder="Birthday date">
+    <input id="group_name" placeholder="Group">
+    <button onclick="createStudent()">Create student</button>
+    <button onclick="editStudent()">Edit student</button>
+</form>
+
+<input id="search_field">
+<button onclick="searchById()">Search by Id</button>
+
+<script>
+    function editStudent(){
+        var id = document.getElementById("id").value;
+        var firstName = document.getElementById("first_name").value;
+        var middleName = document.getElementById("middle_name").value;
+        var lastName = document.getElementById("last_name").value;
+        var birthdayDate = document.getElementById("birthday_date").value;
+        var groupName = document.getElementById("group_name").value;
+
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("PUT", "http://localhost:8080/students");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({id: id,firstName: firstName, middleName: middleName, lastName: lastName, birthdayDate: birthdayDate, groupName: groupName}));
+
+        loadStudents();
+    }
+
+
+    function searchById() {
+        var id = document.getElementById("search_field").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var student = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '       <th>Student id</th>\n' +
+                    '        <th>First name</th>\n' +
+                    '        <th>Middle login</th>\n' +
+                    '        <th>Last name</th>\n' +
+                    '        <th>Birthday</th>\n' +
+                    '        <th>Group</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '    </tr>';
+                html = html + '<tr><td>' + student.id + '</td>\n' +
+                    '        <td>' + student.firstName + '</td>\n' +
+                    '        <td>' + student.middleName + '</td>\n' +
+                    '        <td>' + student.lastName + '</td>' +
+                    '        <td>' + student.birthdayDate + '</td>' +
+                    '        <td>' + student.groupName + '</td>' +
+                    '        <td><button onclick="deleteStudent(' + student.id + ')">Delete</button></td></tr>';
+                document.getElementById("studentsList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/students/" + id, true);
+        xhttp.send();
+    }
+
+    function createStudent() {
+        var firstName = document.getElementById("first_name").value;
+        var middleName = document.getElementById("middle_name").value;
+        var lastName = document.getElementById("last_name").value;
+        var birthdayDate = document.getElementById("birthday_date").value;
+        var groupName = document.getElementById("group_name").value;
+
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("POST", "http://localhost:8080/students");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({firstName: firstName, middleName: middleName, lastName: lastName, birthdayDate: birthdayDate, groupName: groupName}));
+
+        loadStudents();
+    }
+
+    function deleteStudent(studentId) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", "http://localhost:8080/students/" + studentId, true);
+        xhttp.send();
+    }
+
+    function loadStudents() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var students = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>Student id</th>\n' +
+                    '        <th>First name</th>\n' +
+                    '        <th>Middle login</th>\n' +
+                    '        <th>Last name</th>\n' +
+                    '        <th>Birthday</th>\n' +
+                    '        <th>Group</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '    </tr>';
+                for (var i = 0; i < students.length; i++) {
+                    var student = students[i];
+                    console.log(student);
+                    html = html + '<tr><td>' + student.id + '</td>\n' +
+                        '        <td>' + student.firstName + '</td>\n' +
+                        '        <td>' + student.middleName + '</td>\n' +
+                        '        <td>' + student.lastName + '</td>' +
+                        '        <td>' + student.birthdayDate + '</td>' +
+                        '        <td>' + student.groupName + '</td>' +
+                        '        <td><button onclick="deleteStudent(' + student.id + ')">Delete</button></td></tr>';
+
+                }
+                document.getElementById("studentsList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/students/", true);
+        xhttp.send();
+    }
+    loadStudents()
+
+</script>
+
+</body>
+</html>
