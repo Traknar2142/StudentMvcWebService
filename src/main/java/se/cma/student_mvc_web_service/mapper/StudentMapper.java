@@ -12,8 +12,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class StudentMapper {
-    @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     public Student toEntity(StudentDto dto){
         return Objects.isNull(dto) ? null : modelMapper.map(dto, Student.class);

@@ -1,5 +1,6 @@
 package se.cma.student_mvc_web_service.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import se.cma.student_mvc_web_service.service.StudentService;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("students")
 public class StudentController {
     private StudentService studentService;
