@@ -49,6 +49,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public StudentDto updateStudentName(StudentDto user) {
+        Student studentEntity = studentRepository.findById(user.getId()).orElseThrow(() -> new StudentNotFoundException("Student not found"));
+        studentEntity.builder()
+                .firstName(user.getFirstName())
+                .build();
+        return studentMapper.toDto(studentRepository.save(studentEntity));
+    }
+
+    @Override
     public void deleteById(Long id) {
         Student studentEntity = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student not found"));
         studentRepository.delete(studentEntity);

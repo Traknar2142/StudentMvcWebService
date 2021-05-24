@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
 
 @Data
@@ -15,23 +17,30 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentDto {
+
+    @Null
     @JsonProperty("id")
     private Long id;
 
+    @NotNull
     @JsonProperty("firstName")
     private String firstName;
 
+    @NotNull
     @JsonProperty("middleName")
     private String middleName;
 
+    @NotNull
     @JsonProperty("lastName")
     private String lastName;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonProperty("birthdayDate")
     private LocalDate birthdayDate;
 
+    @NotNull
     @JsonProperty("groupName")
     private String group;
 }
