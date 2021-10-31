@@ -1,7 +1,7 @@
 package se.cma.student_mvc_web_service.mapper;
 
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import se.cma.student_mvc_web_service.dto.StudentDto;
 import se.cma.student_mvc_web_service.entity.Student;
@@ -11,13 +11,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class StudentMapper {
-    private ModelMapper modelMapper;
-
-    @Autowired
-    public void setModelMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
+    private final ModelMapper modelMapper;
 
     public Student toEntity(StudentDto dto){
         return Objects.isNull(dto) ? null : modelMapper.map(dto, Student.class);

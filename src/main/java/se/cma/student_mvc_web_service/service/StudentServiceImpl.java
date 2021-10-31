@@ -1,7 +1,7 @@
 package se.cma.student_mvc_web_service.service;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.cma.student_mvc_web_service.dto.StudentDto;
 import se.cma.student_mvc_web_service.entity.Student;
@@ -12,17 +12,11 @@ import se.cma.student_mvc_web_service.repository.StudentRepository;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 @Service
 public class StudentServiceImpl implements StudentService {
-
     private StudentRepository studentRepository;
     private StudentMapper studentMapper;
-
-    @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
-        this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
-    }
 
     @Override
     public List<StudentDto> findAll() {
